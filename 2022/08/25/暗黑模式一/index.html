@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>暗黑模式一 | Jorgon的技术空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、简介从 iOS 13.0 版本开始，用户可以选择采用系统范围内的浅色或深色外观。 深色外观（称为暗黑模式DarkMode）实现了许多应用程序已经采用的界面样式。 用户可以选择自己喜欢的美学，也可以选择根据环境照明条件或特定时间表来切换其界面。苹果强烈建议支持深色模式。 二、支持暗黑模式1.在Assets中添加自定义颜色 3.更新自定义视图的具体方法当用户更改系统外观时，系统会自动要求每个窗口和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暗黑模式一">
+<meta property="og:url" content="https://393698063.github.io/2022/08/25/%E6%9A%97%E9%BB%91%E6%A8%A1%E5%BC%8F%E4%B8%80/index.html">
+<meta property="og:site_name" content="Jorgon的技术空间">
+<meta property="og:description" content="一、简介从 iOS 13.0 版本开始，用户可以选择采用系统范围内的浅色或深色外观。 深色外观（称为暗黑模式DarkMode）实现了许多应用程序已经采用的界面样式。 用户可以选择自己喜欢的美学，也可以选择根据环境照明条件或特定时间表来切换其界面。苹果强烈建议支持深色模式。 二、支持暗黑模式1.在Assets中添加自定义颜色 3.更新自定义视图的具体方法当用户更改系统外观时，系统会自动要求每个窗口和">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-25T08:01:09.000Z">
+<meta property="article:modified_time" content="2022-08-31T09:10:00.322Z">
+<meta property="article:author" content="jorgon">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="Jorgon的技术空间" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">Jorgon的技术空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">总结，技术</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://393698063.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-暗黑模式一" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2022-08-25T08:01:09.000Z" itemprop="datePublished">2022-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      暗黑模式一
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>从 iOS 13.0 版本开始，用户可以选择采用系统范围内的浅色或深色外观。 深色外观（称为暗黑模式DarkMode）实现了许多应用程序已经采用的界面样式。 用户可以选择自己喜欢的美学，也可以选择根据环境照明条件或特定时间表来切换其界面。苹果强烈建议支持深色模式。</p>
+<h2 id="二、支持暗黑模式"><a href="#二、支持暗黑模式" class="headerlink" title="二、支持暗黑模式"></a>二、支持暗黑模式</h2><p>1.在Assets中添加自定义颜色</p>
+<p>3.更新自定义视图的具体方法<br>当用户更改系统外观时，系统会自动要求每个窗口和视图重绘自身。 在此过程中，系统将调用下表中列出的几种众所周知的方法来更新您的内容。 系统在调用这些方法之前会更新特征环境，因此，如果要进行了所有外观敏感的更改，则应用程序会正确的进行更新。</p>
+<p>UIView:<br>-traitCollectionDidChange:<br>-layoutSubviews<br>-drawRect:<br>-updateConstraints<br>-tintColorDidChange</p>
+<p>UIViewController:<br>-traitCollectionDidChange:<br>-updateViewConstraints<br>-viewWillLayoutSubviews<br>-viewDidLayoutSubviews</p>
+<p>UIPresentationController:<br>-traitCollectionDidChange:<br>-containerViewWillLayoutSubviews<br>-containerViewDidLayoutSubviews<br>当用户在明暗界面之间切换时，系统会要求你的应用重新绘制所有内容。虽然系统管理绘图过程，但在绘图过程中的几个点上，它依赖于您的自定义代码。您的代码必须尽可能快，并且不能执行与外观变化无关的任务。<br>如果需要根据当前模式的变化来修改界面，可以重写traitCollectionDidChange:方法进行更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection</span><br><span class="line">&#123;</span><br><span class="line">    [super traitCollectionDidChange:previousTraitCollection];</span><br><span class="line">    UIUserInterfaceStyle userInterfaceStyle &#x3D; previousTraitCollection.userInterfaceStyle;</span><br><span class="line">    &#x2F;&#x2F; 更新视图</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然而并不是每次系统调用traitCollectionDidChange:方法时，模式都有变化，也有可能是设备进行了旋转也会调用traitCollectionDidChange:方法，所以此时需要判断系统主题模式是否发生了改变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection</span><br><span class="line">&#123;</span><br><span class="line">    [super traitCollectionDidChange:previousTraitCollection];</span><br><span class="line">    </span><br><span class="line">    UITraitCollection *traitCollection &#x3D; [UITraitCollection currentTraitCollection];&#x2F;&#x2F; 获取当前的TraitCollection</span><br><span class="line">    BOOL hasUserInterfaceStyleChanged &#x3D; [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:traitCollection];</span><br><span class="line">    &#x2F;&#x2F; 根据当前模式更新视图</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、禁止暗黑模式"><a href="#三、禁止暗黑模式" class="headerlink" title="三、禁止暗黑模式"></a>三、禁止暗黑模式</h2><p>1、全局整个应用<br>可以在info.list中加入键值对UIUserInterfaceStyle对应值为Light字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;UIUserInterfaceStyle&lt;&#x2F;key&gt; &lt;string&gt;Light&lt;&#x2F;string&gt;</span><br></pre></td></tr></table></figure>
+<p>苹果强烈建议支持暗黑模式。当你致力于改善应用程序的暗模式支持时可以使用UIUserInterfaceStyle键来暂时来退出暗黑模式。<br>2、具体的UIViewController、UIView、UIWindow可以使用overrideUserInterfaceStyle属性来设置，通过overrideUserInterfaceStyle可以独立、灵活的设置应用、界面和视图的模式。</p>
+<p>从iOS 13.0 开始UIViewController、UIView、UIWindow类都新增overrideUserInterfaceStyle属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic) UIUserInterfaceStyle overrideUserInterfaceStyle API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);</span><br></pre></td></tr></table></figure>
+<p>UIUserInterfaceStyle枚举类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSInteger, UIUserInterfaceStyle) &#123;</span><br><span class="line">    UIUserInterfaceStyleUnspecified,</span><br><span class="line">    UIUserInterfaceStyleLight,</span><br><span class="line">    UIUserInterfaceStyleDark,</span><br><span class="line">&#125; API_AVAILABLE(tvos(10.0)) API_AVAILABLE(ios(12.0)) API_UNAVAILABLE(watchos);</span><br></pre></td></tr></table></figure>
+<p>设置当前窗口的模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)changeModeAction:(id)sender &#123;</span><br><span class="line">    UIWindow *keyWindow &#x3D; [UIApplication sharedApplication].windows.firstObject;</span><br><span class="line">    if (keyWindow.overrideUserInterfaceStyle &#x3D;&#x3D; UIUserInterfaceStyleDark)   </span><br><span class="line">   &#123;</span><br><span class="line">        keyWindow.overrideUserInterfaceStyle &#x3D; UIUserInterfaceStyleLight;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        keyWindow.overrideUserInterfaceStyle &#x3D; UIUserInterfaceStyleDark;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置具体视图控制器的模式：<br> (void)viewDidLoad {<br>    [super viewDidLoad];<br>    self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://393698063.github.io/2022/08/25/%E6%9A%97%E9%BB%91%E6%A8%A1%E5%BC%8F%E4%B8%80/" data-id="claw83fqk000cab9jah1j9fwn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../../09/27/MetricKIt%E7%9B%91%E6%8E%A7APP%E6%80%A7%E8%83%BD/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MetricKIt监控APP性能
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-6-zoombie-class/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">KSCrash-源码阅读-6 zoombie_class</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2021/01/">January 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../09/27/MetricKIt%E7%9B%91%E6%8E%A7APP%E6%80%A7%E8%83%BD/">MetricKIt监控APP性能</a>
+          </li>
+        
+          <li>
+            <a href="">暗黑模式一</a>
+          </li>
+        
+          <li>
+            <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-6-zoombie-class/">KSCrash-源码阅读-6 zoombie_class</a>
+          </li>
+        
+          <li>
+            <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-5-Dead-lock/">KSCrash-源码阅读-5 Dead lock</a>
+          </li>
+        
+          <li>
+            <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-5-C-Exception/">KSCrash-源码阅读-5 C++ Exception</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 jorgon<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+
+  
+<script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

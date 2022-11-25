@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>卡顿说明 | Jorgon的技术空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="参考 第一部分：FrameTimeFrameTime 的定义：两帧画面间隔耗时(也可简单认为单帧渲染耗时)。  对于FrameTime和卡顿是否有关联？请看下图的案例图示： {% asset_img 8f45de6b-60de-4021-80a3-be3d2cbd3ea9.png This is an example image %} 从图中可看出画面中B帧在GPU渲染耗时(帧生成时间)大于显示器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卡顿说明">
+<meta property="og:url" content="https://393698063.github.io/2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/index.html">
+<meta property="og:site_name" content="Jorgon的技术空间">
+<meta property="og:description" content="参考 第一部分：FrameTimeFrameTime 的定义：两帧画面间隔耗时(也可简单认为单帧渲染耗时)。  对于FrameTime和卡顿是否有关联？请看下图的案例图示： {% asset_img 8f45de6b-60de-4021-80a3-be3d2cbd3ea9.png This is an example image %} 从图中可看出画面中B帧在GPU渲染耗时(帧生成时间)大于显示器">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://393698063.github.io/2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/7c11a66c-a456-43a4-b8a8-29b4f964794b.png">
+<meta property="article:published_time" content="2022-01-24T06:58:08.000Z">
+<meta property="article:modified_time" content="2022-04-08T14:52:19.439Z">
+<meta property="article:author" content="jorgon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://393698063.github.io/2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/7c11a66c-a456-43a4-b8a8-29b4f964794b.png">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="Jorgon的技术空间" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">Jorgon的技术空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">总结，技术</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://393698063.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-卡顿说明" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2022-01-24T06:58:08.000Z" itemprop="datePublished">2022-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      卡顿说明
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://perfdog.qq.com/article_detail?id=10162&issue_id=0&plat_id=1" target="_blank" rel="noopener">参考</a></p>
+<h2 id="第一部分：FrameTime"><a href="#第一部分：FrameTime" class="headerlink" title="第一部分：FrameTime"></a>第一部分：FrameTime</h2><pre><code>FrameTime 的定义：两帧画面间隔耗时(也可简单认为单帧渲染耗时)。
+
+对于FrameTime和卡顿是否有关联？请看下图的案例图示：
+{% asset_img 8f45de6b-60de-4021-80a3-be3d2cbd3ea9.png This is an example image %}</code></pre><p> 从图中可看出画面中B帧在GPU渲染耗时(帧生成时间)大于显示器刷新间隔,占用两次显示器刷新耗时。也就是说有一次画面没刷新。当出现多次没有画面刷新(也就是说画面没变化)，则可能是一次卡顿。</p>
+<p>从这里就得出结论：玩家用户真正看到的是屏幕新画面刷新间隔时间，而不是eglSwapbuffers-GPU渲染完成(并未有提交屏幕显示)间隔时间。所以后面所提到Frametime统统指的是屏幕Display-Frametime。</p>
+<p>PerfDog工具优点：PerfDog统计的FPS和Frametime都是用户看到的屏幕Display新画面真实刷新FPS和帧耗时。所以大家可以直接通过Frametime来判断测试过程中是否出现卡顿</p>
+<h2 id="第二部分：FPS"><a href="#第二部分：FPS" class="headerlink" title="第二部分：FPS"></a>第二部分：FPS</h2><pre><code>FPS的定义：帧率（1秒内平均画面刷新次数）。
+
+平均帧率:传统常说的FPS，1秒内平均画面刷新次数。
+
+瞬时帧率:单帧耗时FrameTime算出来实时FPS，每一帧画面刷新耗时换算出的实时帧率。
+
+
+
+画面渲染流程图如下，每一帧FrameTime。
+ {% asset_img 24bfdf7a-4db8-4d64-a324-3731a28d5ee1.png This is an example image %}</code></pre><p>PerfDog统计帧率及FrameTime如下图：<br> <img src="2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/7c11a66c-a456-43a4-b8a8-29b4f964794b.png" class="" title="This is an example image"></p>
+<p>  iOS端<br>        苹果WDDC18年开发者大会</p>
+<pre><code>①     FramePacing
+
+比如下面两个游戏画面,左边的试图以60帧运行,但实际只能达到40帧;右边的则持续稳定在30帧运行:
+ {% asset_img 640.gif This is an example image %}</code></pre><p>通过FrameTime可以看出，左边高帧率FPS=40帧率中出现一次FrameTim&gt;=117ms，理论平均FrameTime=25ms。所以非均匀渲染，虽然帧率高达40，但依然觉得非常卡。</p>
+<p>总结：帧率高，未必流畅</p>
+<h2 id="第三部分：流畅度"><a href="#第三部分：流畅度" class="headerlink" title="第三部分：流畅度"></a>第三部分：流畅度</h2><pre><code>流畅度与卡顿的关联可以用以下的流程图来大致展示：</code></pre>{% asset_img 76c17c01-f03d-488a-8929-b399351f51d8.png This is an example image %}
+<pre><code>流畅度影响卡顿。这个可以简单的理解为视觉惯性和电影帧这两个方面
+
+ 1、视觉惯性
+    视觉预期帧率，用户潜意识里认为下帧也应该是当前帧率刷新比如一直60帧，用户潜意识里认为下帧也应该是60帧率。刷新一直是25帧，用户潜意识里认为下帧也应该是25帧率。但是刷新如果是60帧一下跳变为25帧，扰乱用户视觉惯性。这个时候就会出现用户体验的卡顿感。
+
+
+
+2、电影帧
+    电影帧率(18-24)，一般是24帧。电影帧单帧耗时：1000ms/24≈41.67ms。电影帧率是一个临界点。低于这个帧率，人眼基本能感觉画面不连续性，也就是感觉到了卡顿。</code></pre><h2 id="第四部分："><a href="#第四部分：" class="headerlink" title="第四部分："></a>第四部分：</h2><ul>
+<li>Color Blended Layers - 这个选项基于渲染程度对屏幕中的混合区域进行绿到 红的高亮(也就是多个半透明图层的叠加)。由于重绘的原因，混合对GPU性 能会有影响，同时也是滑动或者动画帧率下降的罪魁祸首之一。</li>
+<li>Color Hits Green and Misses Red - 当使用 shouldRasterizep 属性的时候， 耗时的图层绘制会被缓存，然后当做一个简单的扁平图片呈现。当缓存再生的时候这个选项就用红色对栅格化图层进行了高亮。如果缓存频繁再生的话，就意味着栅格化可能会有负面的性能影响了。</li>
+<li>Color Copied Images - 有时候寄宿图片的生成意味着Core Animation被强制生成一些图片，然后发送到渲染服务器，而不是简单的指向原始指针。这个选 项把这些图片渲染成蓝色。复制图片对内存和CPU使用来说都是一项非常昂贵的操作，所以应该尽可能的避免。</li>
+<li>Color Immediately - 通常Core Animation Instruments以每毫秒10次的频率更 新图层调试颜色。对某些效果来说，这显然太慢了。这个选项就可以用来设置每帧都更新(可能会影响到渲染性能，而且会导致帧率测量不准，所以不要一直都设置它)。</li>
+<li>Color Misaligned Images - 这里会高亮那些被缩放或者拉伸以及没有正确对齐到像素边界的图片(也就是非整型坐标)。这些中的大多数通常都会导致图片的不正常缩放，如果把一张大图当缩略图显示，或者不正确地模糊图像，那么这个选项将会帮你识别出问题所在。</li>
+<li>Color Offscreen-Rendered Yellow - 这里会把那些需要离屏渲染的图层高亮 成黄色。这些图层很可能需要用 shadowPath 或者 shouldRasterize 来优化。</li>
+<li>Color OpenGL Fast Path Blue - 这个选项会对任何直接使用OpenGL绘制的 图层进行高亮。如果仅仅使用UIKit或者Core Animation的API，那么不会有任何效果。如果使用 GLKView 或者 CAEAGLLayer，那如果不显示蓝色块的话就意味着你正在强制CPU渲染额外的纹理，而不是绘制到屏幕。</li>
+<li>Flash Updated Regions - 这个选项会对重绘的内容高亮成黄色(也就是任何在软件层面使用Core Graphics绘制的图层)。这种绘图的速度很慢。如果频繁发生这种情况的话，这意味着有一个隐藏的bug或者说通过增加缓存或者使 用替代方案会有提升性能的空间。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://393698063.github.io/2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/" data-id="claw83fqj000aab9jc4egagis" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-3-Signal/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          KSCrash-源码阅读-3 Signal
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../../2021/12/29/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-1-Crash%E5%88%86%E7%B1%BB/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">KSCrash 源码阅读(1) Crash分类</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2021/01/">January 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../09/27/MetricKIt%E7%9B%91%E6%8E%A7APP%E6%80%A7%E8%83%BD/">MetricKIt监控APP性能</a>
+          </li>
+        
+          <li>
+            <a href="../../../08/25/%E6%9A%97%E9%BB%91%E6%A8%A1%E5%BC%8F%E4%B8%80/">暗黑模式一</a>
+          </li>
+        
+          <li>
+            <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-6-zoombie-class/">KSCrash-源码阅读-6 zoombie_class</a>
+          </li>
+        
+          <li>
+            <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-5-Dead-lock/">KSCrash-源码阅读-5 Dead lock</a>
+          </li>
+        
+          <li>
+            <a href="../../../04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-5-C-Exception/">KSCrash-源码阅读-5 C++ Exception</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 jorgon<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+
+  
+<script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

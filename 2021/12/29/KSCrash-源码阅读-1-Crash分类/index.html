@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>KSCrash 源码阅读(1) Crash分类 | Jorgon的技术空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 异常的类型 Mach kernel exception：是指最底层的内核级异常。用户态?的开发者可以直接通过Mach API设置thread，task，host?的异常端口，来捕获Mach异常  Fatal signal：又称 BSD? 信号，如果开发者没有捕获Mach异常，则会被host层的方法ux_exception()将异常转换为对应的UNIX信号，并通过方法threadsignal(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KSCrash 源码阅读(1) Crash分类">
+<meta property="og:url" content="https://393698063.github.io/2021/12/29/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-1-Crash%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="Jorgon的技术空间">
+<meta property="og:description" content="1. 异常的类型 Mach kernel exception：是指最底层的内核级异常。用户态?的开发者可以直接通过Mach API设置thread，task，host?的异常端口，来捕获Mach异常  Fatal signal：又称 BSD? 信号，如果开发者没有捕获Mach异常，则会被host层的方法ux_exception()将异常转换为对应的UNIX信号，并通过方法threadsignal(">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-29T12:03:55.000Z">
+<meta property="article:modified_time" content="2022-04-08T14:52:19.433Z">
+<meta property="article:author" content="jorgon">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="Jorgon的技术空间" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">Jorgon的技术空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">总结，技术</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://393698063.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-KSCrash-源码阅读-1-Crash分类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2021-12-29T12:03:55.000Z" itemprop="datePublished">2021-12-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      KSCrash 源码阅读(1) Crash分类
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-异常的类型"><a href="#1-异常的类型" class="headerlink" title="1. 异常的类型"></a>1. 异常的类型</h2><ul>
+<li><p>Mach kernel exception：是指最底层的内核级异常。用户态?的开发者可以直接通过Mach API设置thread，task，host?的异常端口，来捕获Mach异常</p>
+</li>
+<li><p>Fatal signal：又称 BSD? 信号，如果开发者没有捕获Mach异常，则会被host层的方法ux_exception()将异常转换为对应的UNIX信号，并通过方法threadsignal()将信号投递到出错线程。可以通过方法signal(x, SignalHandler)来捕获signal</p>
+</li>
+<li><p>Uncaught C++ exception ： Captures and reports C++ exceptions</p>
+</li>
+<li><p>Uncaught Objective-C NSException ：应用级异常，它是未被捕获的Objective-C异常，导致程序向自身发送了SIGABRT信号而崩溃，是app自己可控的，对于未捕获的Objective-C异常，是可以通过try catch来捕获的，或者通过NSSetUncaughtExceptionHandler()机制来捕获</p>
+</li>
+<li><p>Deadlock on the main thread：</p>
+</li>
+<li><p>User reported custom exception ：</p>
+<h2 id="2-Mach异常与-Unix-信号"><a href="#2-Mach异常与-Unix-信号" class="headerlink" title="2. Mach异常与 Unix 信号"></a>2. Mach异常与 Unix 信号</h2><blockquote>
+<ul>
+<li>Mach是一个微内核，旨在提供基本的进程间通信功能。</li>
+<li>XNU是一个混合内核，由Mach微内核和更传统（“单片”）</li>
+<li>BSD unix内核的组件组成。它还包括在运行时加载内核扩展的功能（添加功能，设备驱动程序等）</li>
+<li>Darwin是一个Unix操作系统，由XNU内核以及各种开源实用程序，库等组成。<br>OS X是Darwin，加上许多专有组件，最着名的是它的图形界面API。</li>
+</ul>
+</blockquote>
+<ol>
+<li>Mach微内核中有几个基础概念：</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>Tasks，拥有一组系统资源的对象，允许”thread”在其中执行。</li>
+<li>Threads，执行的基本单位，拥有task的上下文，并共享其资源。</li>
+<li>Ports，task之间通讯的一组受保护的消息队列；task可对任何port发送/接收数据。</li>
+<li>Message，有类型的数据对象集合，只可以发送到port</li>
+</ul>
+<ol start="2">
+<li><p>signal：<br>1) SIGHUP<br>本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一session内的各个作业, 这时它们与控制终端不再关联。<br>登录Linux时，系统会分配给登录用户一个终端(Session)。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session。当用户退出Linux登录时，前台进程组和后台有对终端输出的进程将会收到SIGHUP信号。这个信号的默认操作为终止进程，因此前台进 程组和后台有终端输出的进程就会中止。不过可以捕获这个信号，比如wget能捕获SIGHUP信号，并忽略它，这样就算退出了Linux登录， wget也 能继续下载。<br>此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。<br>2) SIGINT<br>程序终止(interrupt)信号, 在用户键入INTR字符(通常是Ctrl-C)时发出，用于通知前台进程组终止进程。<br>3) SIGQUIT<br>和SIGINT类似, 但由QUIT字符(通常是Ctrl-)来控制. 进程在因收到SIGQUIT退出时会产生core文件, 在这个意义上类似于一个程序错误信号。<br>6) SIGABRT<br>调用abort函数生成的信号。<br>7) SIGBUS<br>非法地址, 包括内存地址对齐(alignment)出错。比如访问一个四个字长的整数, 但其地址不是4的倍数。它与SIGSEGV的区别在于后者是由于对合法存储地址的非法访问触发的(如访问不属于自己存储空间或只读存储空间)。<br>8) SIGFPE<br>在发生致命的算术运算错误时发出. 不仅包括浮点运算错误, 还包括溢出及除数为0等其它所有的算术的错误。<br>9) SIGKILL<br>用来立即结束程序的运行. 本信号不能被阻塞、处理和忽略。如果管理员发现某个进程终止不了，可尝试发送这个信号。<br>11) SIGSEGV<br>试图访问未分配给自己的内存, 或试图往没有写权限的内存地址写数据.<br>13) SIGPIPE<br>管道破裂。这个信号通常在进程间通信产生，比如采用FIFO(管道)通信的两个进程，读管道没打开或者意外终止就往管道写，写进程会收到SIGPIPE信号。此外用Socket通信的两个进程，写进程在写Socket的时候，读进程已经终止。<br>ios crash 中主要是SIGKILL,SIGSEGV,SIGABRT,SIGTRAP<br>引起系统信号crash 主要有内存泄露、野指针等.<br>几种特别类型:<br>0x8badf00d 在启动、终⽌止应⽤用或响应系统事件花费过⻓长时间,意为“ate bad food”。<br>0xdeadfa11 ⽤用户强制退出,意为“dead fall”。(系统⽆无响应时,⽤用户按电源开关和HOME)<br>0xbaaaaaad ⽤用户按住Home键和⾳音量键,获取当前内存状态,不代表崩溃<br>0xbad22222 VoIP应⽤用因为恢复得太频繁导致crash<br>0xc00010ff 因为太烫了被干掉,意为“cool off”<br>0xdead10cc 因为在后台时仍然占据系统资源(⽐比如通讯录)被干掉,意为“dead lock”</p>
+<h2 id="3-Objective-C-Exception"><a href="#3-Objective-C-Exception" class="headerlink" title="3. Objective-C Exception"></a>3. Objective-C Exception</h2><p>比如我们经常遇到的数组越界，数组插入 nil，都是属于此种类型，主要包含以下几类：</p>
+</li>
+</ol>
+<ul>
+<li><p>NSInvalidArgumentException<br>非法参数异常</p>
+</li>
+<li><p>NSRangeException<br>数组越界异常</p>
+</li>
+<li><p>NSGenericException<br>这个异常最容易出现在foreach操作中，在for in循环中如果修改所遍历的数组，无论你是add或remove，都会出错</p>
+</li>
+<li><p>NSInternalInconsistencyException<br>不一致导致出现的异常<br>比如NSDictionary当做NSMutableDictionary来使用，从他们内部的机理来说，就会产生一些错误</p>
+</li>
+<li><p>NSFileHandleOperationException<br>处理文件时的一些异常，最常见的还是存储空间不足的问题</p>
+</li>
+<li><p>NSMallocException<br>这也是内存不足的问题，无法分配足够的内存空间</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://393698063.github.io/2021/12/29/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-1-Crash%E5%88%86%E7%B1%BB/" data-id="claw83fq80001ab9j1x4ifavq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../../../2022/01/24/%E5%8D%A1%E9%A1%BF%E8%AF%B4%E6%98%8E/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          卡顿说明
+        
+      </div>
+    </a>
+  
+  
+    <a href="../KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-2%20Mach%20kerner%20execption/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">KSCrash 源码阅读-2 Mach kerner exception</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2021/01/">January 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2022/09/27/MetricKIt%E7%9B%91%E6%8E%A7APP%E6%80%A7%E8%83%BD/">MetricKIt监控APP性能</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2022/08/25/%E6%9A%97%E9%BB%91%E6%A8%A1%E5%BC%8F%E4%B8%80/">暗黑模式一</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2022/04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-6-zoombie-class/">KSCrash-源码阅读-6 zoombie_class</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2022/04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-5-Dead-lock/">KSCrash-源码阅读-5 Dead lock</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2022/04/11/KSCrash-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-5-C-Exception/">KSCrash-源码阅读-5 C++ Exception</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 jorgon<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+
+  
+<script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
